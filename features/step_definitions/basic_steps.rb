@@ -186,7 +186,7 @@ Then /^I should( not)? see "([^"]*)"$/ do |negative, string|
   unless negative
     expect(page).to have_text string
   else
-    expect(page).to_not have_text string
+    expect(page).to_not have_text string #fail
   end
 end
 
@@ -257,7 +257,7 @@ Given(/^I (?:am on|go to) the "([^"]*)" page for ([^"]*) "([^"]*)"$/) do |action
   visit url_for_title(action: action, controller: controller, title: title)
 end
 
-Then(/^I should( not be able to)? see a link to "([^"]*)" page for ([^"]*) "([^"]*)"$/) do |invisible, action, controller, title|
+Then(/^I should( not be able to)? see a link to "([^"]*)" page for ([^"]*) "([^"]*)"$/) do |invisible, action, controller, title| #fail
   page.has_link?(action, href: url_for_title(action: action, controller: controller, title: title))
   unless invisible
     page.should have_text title, visible: false
@@ -345,7 +345,7 @@ Then(/^I should see a link "([^"]*)" to "([^"]*)"$/) do |text, link|
 end
 
 Then(/^I should see an image with source "([^"]*)"$/) do |source|
-  expect(page).to have_css "img[src*=\"#{source}\"]"
+  expect(page).to have_css "img[src*=\"#{source}\"]" #fail #fail
 end
 
 Then(/^I should see the "(.*)" icon$/) do |provider|
