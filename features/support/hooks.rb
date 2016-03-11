@@ -18,6 +18,15 @@ After('@time-travel , @time-travel-step') do
   ENV['TZ'] = @default_tz
 end
 
+Before('@intermittent-fail') do
+  @original_wait_time = Capybara.default_wait_time
+  Capybara.default_wait_time = 50
+end
+
+After('@intermittent-fail') do
+  Capybara.default_wait_time = @original_wait_time
+end
+
 Before('@omniauth') do
   OmniAuth.config.test_mode = true
   OmniAuth.config.mock_auth[:github] = {

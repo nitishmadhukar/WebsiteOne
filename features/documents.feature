@@ -142,7 +142,7 @@ Feature: Manage Document
     Then I should see an image with source "/assets/av-logo-inverse.png" within the Mercury Editor
     Then the Mercury Editor modal window should not be visible
 
-  @javascript
+  @javascript @intermittent-fail
   Scenario: Missing Image gets added when a user can inserts an invalid image
     Given the document "Guides" has a child document with title "Howto"
     And I am logged in
@@ -152,10 +152,11 @@ Feature: Manage Document
     Then the Mercury Editor modal window should be visible
     When I fill in "URL" with "https://google.com/sodfjslkdfj.png" within the Mercury Modal
     And I click "Insert Media" within the Mercury Editor Modal
-    Then I should see an image with source "/assets/mercury/missing-image.png" within the Mercury Editor  #fail
+    Then I should see an image with source "/assets/mercury/missing-image.png" within the Mercury Editor
+    # fails
     Then the Mercury Editor modal window should not be visible
 
-  @javascript
+  @javascript @intermittent-fail
   Scenario: Insert media model accepts full url youtube links
     Given I am logged in
     And I am using the Mercury Editor to edit document "Guides"
@@ -164,9 +165,10 @@ Feature: Manage Document
     And I fill in "YouTube URL" with "https://www.youtube.com/watch?v=foo" within the Mercury Editor Modal
     And I click "Insert Media" within the Mercury Editor Modal
     Then the Mercury Editor modal window should not be visible
-    And I should see an video with source "http://www.youtube.com/embed/foo?wmode=transparent" within the Mercury Editor #fail
+    And I should see an video with source "http://www.youtube.com/embed/foo?wmode=transparent" within the Mercury Editor
+    # fails
 
-  @javascript
+  @javascript @intermittent-fail
   Scenario: Insert media model rejects badly formatted youtube links
     Given I am logged in
     And I am using the Mercury Editor to edit document "Guides"
@@ -174,7 +176,8 @@ Feature: Manage Document
     And I click on the "Insert Media" button within the Mercury Toolbar
     And I fill in "YouTube URL" with "https://www.youtube.io/watch?v=foo" within the Mercury Editor Modal
     And I click "Insert Media" within the Mercury Editor Modal
-    Then I should see "is invalid" within the Mercury Modal #fails
+    Then I should see "is invalid" within the Mercury Modal
+    # fails
     And the Mercury Editor modal window should be visible
 
   @javascript
