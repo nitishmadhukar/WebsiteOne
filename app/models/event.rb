@@ -30,6 +30,10 @@ class Event < ActiveRecord::Base
     Event.where(category: "PairProgramming")
   end
 
+  def self.transform_params(params)
+
+  end
+
   def self.pending_hookups
     pending = []
     hookups.each do |h|

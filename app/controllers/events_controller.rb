@@ -37,16 +37,11 @@ class EventsController < ApplicationController
   end
 
   def update
-    begin
-      updated = @event.update_attributes(Event.transform_params(params))
-    rescue
-      attr_error = 'attributes invalid'
-    end
-    if updated
+    if UpdateEvent.with(self, params, @event)
       flash[:notice] = 'Event Updated'
       redirect_to event_path(@event)
     else
-      flash[:alert] = ['Failed to update event:', @event.errors.full_messages, attr_error].join(' ')
+      flash[:alert] = ['Failed to update event:', @event.errors.full_messages].join(' ')
       redirect_to edit_event_path(@event)
     end
   end

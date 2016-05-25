@@ -14,24 +14,23 @@ class CreateEvent
   end
 
   def run
-    create_start_datetime
     handle_repeat_ends_settings
+    create_start_datetime
+    @params = params.require(:event).permit!
     add_defaults
     model_klass.new(params)
   end
 
   def create_start_datetime
-    event_params = params.require(:event).permit!
     if (params['start_date'].present? && params['start_time'].present?)
       Time.zone = params["start_time_tz"]["time_zone"]
-      event_params[:start_datetime] = Time.zone.parse(params["start_date"]+" " + params["start_time"]).utc
+      @params[:event][:start_datetime] = Time.zone.parse(params["start_date"]+" " + params["start_time"]).utc
     end
-    @params = event_params
   end
 
   def handle_repeat_ends_settings
-    @params[:repeat_ends] = (params['repeat_ends_string'] == 'on')
-    @params[:repeat_ends_on]= params[:repeat_ends_on].present? ? "#{params[:repeat_ends_on]} UTC" : ""
+    @params[:event][:repeat_ends] = (params[:event]['repeat_ends_string'] == 'on')
+    @params[:event][:repeat_ends_on]= params[:repeat_ends_on].present? ? "#{params[:repeat_ends_on]} UTC" : ""
   end
 
   def add_defaults
