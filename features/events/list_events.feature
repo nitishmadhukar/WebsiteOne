@@ -16,7 +16,6 @@ Feature: List Events
       | PP Session | Pair programming on WSO | PairProgramming | 2014/02/07 10:00:00 UTC | 15       | never   | UTC       | cs169   |
     Given the date is "2014/02/01 09:15:00 UTC"
 
-
   Scenario: Show index of events
     Given I am on Events index page
     Then "All" is selected in the project dropdown
